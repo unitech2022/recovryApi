@@ -11,7 +11,7 @@ namespace DiscoveryZoneApi.Models
     {
 
           public int Id { get; set; }
-          public string? UserId { get; set; }
+        //   public string? UserId { get; set; }
 
           public string? TitleAr { get; set; }
 
@@ -19,9 +19,8 @@ namespace DiscoveryZoneApi.Models
           public string? DescriptionAr { get; set; }
 
            public string? DescriptionEng { get; set; }
-          public string? Type { get; set; }
-          public int PageId { get; set; }
-
+        //   public string? Type { get; set; }
+        //   public int PageId { get; set; }
          public bool Viewed { get; set; }
 
         public DateTime CreatedAt { get; set; }

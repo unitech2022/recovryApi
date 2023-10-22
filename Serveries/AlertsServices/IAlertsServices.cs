@@ -12,5 +12,7 @@ namespace DiscoveryZoneApi.Serveries.AlertsServices
     {
         //  Task<AlertResponse> GetAlertsByUserId(string userId);
           Task<dynamic> ViewedAlert(int alertId);
+
+         Task<dynamic> SendNotification(Alert alert,string topic);
     }
 }

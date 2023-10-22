@@ -35,7 +35,7 @@ namespace DiscoveryZoneApi.Data
         public DbSet<Card>? Cards { get; set; }
 
 
-
+public DbSet<Setting>? Settings { get; set; }
         public DbSet<Subscription>? Subscriptions { get; set; }
 
 

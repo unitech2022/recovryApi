@@ -32,7 +32,7 @@ namespace DiscoveryZoneApi.Controllers
             {
                 Directory.CreateDirectory(path);
             }
-            String fileName = DateTime.Now.ToString("yyyyMMddTHHmmss") + ".jpeg";
+            String fileName = DateTime.Now.ToString("yyyyMMddTHHmmss")+ DateTime.Now.Millisecond + ".jpeg";
             using (var fileStream = System.IO.File.Create(path + fileName))
             {
                 file.CopyTo(fileStream);

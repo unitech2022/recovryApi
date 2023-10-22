@@ -11,9 +11,13 @@ namespace DiscoveryZoneApi.Models
         public string? Image { get; set; }
         public string? NameAr { get; set; }
 
-         public string? NameEng { get; set; }
+        public string? NameEng { get; set; }
+
+        public int TypeDate { get; set; } /// 0 year
         public int Order { get; set; }
 
+      
+        public double Price { get; set; }
         public string? Link { get; set; }
 
         public int Status { get; set; }
@@ -22,6 +26,7 @@ namespace DiscoveryZoneApi.Models
         {
 
             CreatedAt = DateTime.Now;
+            TypeDate = 0;
 
         }
     }

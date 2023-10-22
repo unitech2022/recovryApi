@@ -33,9 +33,24 @@ namespace DiscoveryZoneApi.Serveries.SubscriptionsService
 
             await _context.SaveChangesAsync();
 
+
+
             return type;
 
         }
+
+          public async Task<dynamic> AddSubscription(Subscription subscription)
+        {
+          await _context.Subscriptions!.AddAsync(subscription);
+
+            await _context.SaveChangesAsync();
+             
+             subscription.Code=subscription.Id+100;
+    await _context.SaveChangesAsync();
+
+            return subscription;
+        }
+
 
         public async Task<dynamic> DeleteAsync(int typeId)
         {
@@ -231,6 +246,7 @@ namespace DiscoveryZoneApi.Serveries.SubscriptionsService
             return baseResponse;
         }
 
+      
 
 
         // public async Task<BaseResponse> GetSubscriptionsByCategoryId(int categoryId, int page)
@@ -261,7 +277,7 @@ namespace DiscoveryZoneApi.Serveries.SubscriptionsService
 
 
         // }
-   
-   
+
+
     }
 }

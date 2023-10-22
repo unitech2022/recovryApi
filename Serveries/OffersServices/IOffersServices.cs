@@ -12,5 +12,8 @@ namespace DiscoveryZoneApi.Serveries.OffersServices
     {
         //  Task<AlertResponse> GetAlertsByUserId(string userId);
         //   Task<dynamic> ViewedAlert(string userId,int alertId);
+
+          Task<Offer> UpdateOfferStatus(int status, int id);
+             Task<Offer> UpdateOffer(string image,string DescAr,int order, int id);
     }
 }

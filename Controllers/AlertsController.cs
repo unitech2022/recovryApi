@@ -11,6 +11,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiscoveryZoneApi.Controllers
 {
+
+
+
+// *** add in subscribe
+/// **   Code 
+
+// markets 
+//** LogoImage
+
+
+
     [ApiController]
     [Route("alerts")]
     public class AlertsController : ControllerBase
@@ -55,6 +66,12 @@ namespace DiscoveryZoneApi.Controllers
             return Ok(await _repository.ViewedAlert(alertId));
         }
         
+          [HttpPost]
+        [Route("send-Alert")]
+        public async Task<ActionResult> SendAlert([FromForm] Alert alert, [FromForm] string topic)
+        {
+            return Ok(await _repository.SendNotification(alert,topic));
+        }
 
         [HttpPut]
         [Route("update-Alert")]

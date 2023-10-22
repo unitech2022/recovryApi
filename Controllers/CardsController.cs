@@ -52,6 +52,13 @@ namespace DiscoveryZoneApi.Controllers
         }
 
 
+        [HttpGet]
+        [Route("get-Card-user")]
+        public async Task<ActionResult> GetCardUser([FromQuery] string userId)
+        {
+
+            return Ok(await _repository.GetCardUser(userId));
+        }
 
 
         [HttpPut]

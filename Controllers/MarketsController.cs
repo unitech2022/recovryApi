@@ -8,6 +8,7 @@ using DiscoveryZoneApi.Models;
 
 using DiscoveryZoneApi.Serveries.MarketsService;
 using Microsoft.AspNetCore.Authorization;
+using DiscoveryZoneApi.Dtos;
 
 namespace DiscoveryZoneApi.Controllers
 {
@@ -43,22 +44,22 @@ namespace DiscoveryZoneApi.Controllers
 
         [HttpGet]
         [Route("get-Markets-by-fieldId")]
-        public async Task<ActionResult> GetMarketByFieldId([FromQuery] int page ,[FromQuery] int fieldId)
+        public async Task<ActionResult> GetMarketByFieldId([FromQuery] int page, [FromQuery] int fieldId)
         {
 
 
 
 
-            return Ok(await _repository.GetMarketsByFieldId(fieldId,page));
+            return Ok(await _repository.GetMarketsByFieldId(fieldId, page));
         }
 
 
         [HttpGet]
         [Route("get-Markets-by-catId")]
-        public async Task<ActionResult> GetGetMarketsByCategoryId([FromQuery] int page ,[FromQuery] int categoryId)
+        public async Task<ActionResult> GetGetMarketsByCategoryId([FromQuery] int page, [FromQuery] int categoryId)
         {
 
-            return Ok(await _repository.GetMarketsByCategoryId(categoryId,page));
+            return Ok(await _repository.GetMarketsByCategoryId(categoryId, page));
         }
 
         [HttpPost]
@@ -78,10 +79,10 @@ namespace DiscoveryZoneApi.Controllers
 
         [HttpPost]
         [Route("search-Market")]
-        public async Task<ActionResult> SearchMarket([FromForm] string textSearch)
+        public async Task<ActionResult> SearchMarket([FromForm] string textSearch,[FromForm] int type)
         {
 
-            return Ok(await _repository.SearchMarket(textSearch));
+            return Ok(await _repository.SearchMarket(textSearch,type));
         }
 
         [HttpGet]
@@ -94,10 +95,19 @@ namespace DiscoveryZoneApi.Controllers
 
         [HttpPost]
         [Route("update-Market")]
-        public async Task<ActionResult> UpdateMarket([FromForm] Market Market)
+        public async Task<ActionResult> UpdateMarket([FromForm] UpdateMarketDto Market, [FromForm] int id)
         {
 
-            return Ok(await _repository.UpdateMarket(Market));
+            return Ok(await _repository.UpdateMarket(Market, id));
+        }
+
+
+        [HttpPost]
+        [Route("update-Market-status")]
+        public async Task<ActionResult> UpdateMarketStatus([FromForm] int status, [FromForm] int id)
+        {
+
+            return Ok(await _repository.UpdateMarketStatus(status, id));
         }
 
 

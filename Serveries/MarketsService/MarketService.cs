@@ -10,14 +10,12 @@ using DiscoveryZoneApi.Models;
 using DiscoveryZoneApi.Models.BaseEntity;
 using DiscoveryZoneApi.ViewModels;
 using X.PagedList;
-
-
+using DiscoveryZoneApi.Dtos;
 
 namespace DiscoveryZoneApi.Serveries.MarketsService
 {
     public class MarketsService : IMarketsService
     {
-
         private readonly AppDBcontext _context;
         private IMapper _mapper;
 
@@ -86,19 +84,34 @@ namespace DiscoveryZoneApi.Serveries.MarketsService
 
         // }
 
-
-
-        public async Task<List<Market>> SearchMarket(string textSearch)
+        public async Task<List<MarketResponse>> SearchMarket(string textSearch, int type)
         {
+            // ** type =0 arabic // = 1 english 
+            List<MarketResponse> marketResponses = new();
 
-            List<Market> markets = new List<Market>();
-            List<Market> allMarkets = await _context.Markets!.Where(p => p.NameAr!.Contains(textSearch) && p.Status != 1).ToListAsync();
-            // Address? userAddress = await _context.Markets!.FirstOrDefaultAsync(x => x.Id == AddressId);
-            // foreach (var market in allMarkets)
-            // {
+            List<Market> markets = new();
+            if (type == 0)
+            {
+                markets = await _context.Markets!.Where(p => p.NameAr!.Contains(textSearch) && p.Status != 1).ToListAsync();
+            }
+            else
+            {
+                markets = await _context.Markets!.Where(p => p.NameEng!.Contains(textSearch) && p.Status != 1).ToListAsync();
+            }
+
+            foreach (var item in markets)
+            {
+                Card? card = await _context.Cards!.FirstOrDefaultAsync(t => t.Id == item.CardId);
+
+                marketResponses.Add(new MarketResponse
+                {
+                    market = item,
+                    card = card
+                });
+            }
 
 
-            return allMarkets;
+            return marketResponses;
 
         }
 
@@ -108,16 +121,20 @@ namespace DiscoveryZoneApi.Serveries.MarketsService
             return Market!;
         }
 
-
-
         public bool SaveChanges()
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateObject(dynamic category)
+        public async Task<Market> UpdateMarket(UpdateMarketDto updateMarketDto, int id)
         {
-            throw new NotImplementedException();
+            Market? market = await _context.Markets!.FirstOrDefaultAsync(t => t.Id == id);
+
+            _mapper.Map(updateMarketDto, market);
+
+            await _context.SaveChangesAsync();
+
+            return market!;
         }
 
 
@@ -189,16 +206,27 @@ namespace DiscoveryZoneApi.Serveries.MarketsService
         public async Task<BaseResponse> GetMarketsByFieldId(int fieldId, int page)
         {
 
-
+            List<MarketResponse> marketResponses = new();
 
             List<Market> Markets = await _context.Markets!.OrderBy(t => t.Order).Where(t => t.FieldId == fieldId).ToListAsync();
+
+            foreach (var item in Markets)
+            {
+                Card? card = await _context.Cards!.FirstOrDefaultAsync(t => t.Id == item.CardId);
+
+                marketResponses.Add(new MarketResponse
+                {
+                    market = item,
+                    card = card
+                });
+            }
 
 
 
             var pageResults = 15f;
-            var pageCount = Math.Ceiling(Markets.Count() / pageResults);
+            var pageCount = Math.Ceiling(marketResponses.Count / pageResults);
 
-            var items = await Markets
+            var items = await marketResponses
                 .Skip((page - 1) * (int)pageResults)
                 .Take((int)pageResults)
                 .ToListAsync();
@@ -215,17 +243,26 @@ namespace DiscoveryZoneApi.Serveries.MarketsService
             return baseResponse;
         }
 
-
-
         public async Task<BaseResponse> GetMarketsByCategoryId(int categoryId, int page)
         {
+            List<MarketResponse> marketResponses = new();
             List<Market> Markets = await _context.Markets!.OrderBy(t => t.Order).Where(t => t.CategoryId == categoryId).ToListAsync();
 
+            foreach (var item in Markets)
+            {
+                Card? card = await _context.Cards!.FirstOrDefaultAsync(t => t.Id == item.CardId);
+
+                marketResponses.Add(new MarketResponse
+                {
+                    market = item,
+                    card = card
+                });
+            }
 
             var pageResults = 15f;
-            var pageCount = Math.Ceiling(Markets.Count() / pageResults);
+            var pageCount = Math.Ceiling(marketResponses.Count / pageResults);
 
-            var items = await Markets
+            var items = await marketResponses
                 .Skip((page - 1) * (int)pageResults)
                 .Take((int)pageResults)
                 .ToListAsync();
@@ -243,6 +280,24 @@ namespace DiscoveryZoneApi.Serveries.MarketsService
 
 
 
+
+        }
+
+        public void UpdateObject(dynamic category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Market> UpdateMarketStatus(int status, int id)
+        {
+            Market? market = await _context.Markets!.FirstOrDefaultAsync(t => t.Id == id);
+
+            if (market != null)
+            {
+                market.Status = status;
+                await _context.SaveChangesAsync();
+            }
+            return market!;
 
         }
     }

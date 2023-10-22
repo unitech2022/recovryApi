@@ -73,7 +73,7 @@ namespace DiscoveryZoneApi.Controllers
                 return NotFound();
             }
 
-            await _repository.AddAsync(Subscription);
+            await _repository.AddSubscription(Subscription);
 
             return Ok(Subscription);
         }

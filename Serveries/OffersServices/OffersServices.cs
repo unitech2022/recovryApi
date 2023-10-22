@@ -55,7 +55,7 @@ namespace DiscoveryZoneApi.Serveries.OffersServices
             throw new NotImplementedException();
         }
 
-        public async Task<dynamic> GetItems( int page)
+        public async Task<dynamic> GetItems(int page)
         {
             List<Offer> Offers = await _context.Offers!.ToListAsync();
 
@@ -97,8 +97,42 @@ namespace DiscoveryZoneApi.Serveries.OffersServices
             // nothing
         }
 
-       
+        public async Task<Offer> UpdateOfferStatus(int status, int id)
+        {
+            Offer? offer = await _context.Offers!.FirstOrDefaultAsync(t => t.Id == id);
 
-       
+            if (offer != null)
+            {
+                offer.Status = status;
+                await _context.SaveChangesAsync();
+            }
+            return offer!;
+        }
+
+        public async Task<Offer> UpdateOffer(string image, string DescAr, int id, int order)
+        {
+            Offer? offer = await _context.Offers!.FirstOrDefaultAsync(t => t.Id == id);
+            if (image != null && offer!.Image != image)
+            {
+
+                offer.Image = image;
+            }
+
+            if (DescAr != null && offer!.DescAr != DescAr)
+            {
+
+                offer.DescAr = DescAr;
+            }
+
+        
+            if (offer!.Order != order)
+            {
+
+                offer.Order = order;
+            }
+
+            await _context.SaveChangesAsync();
+            return offer;
+        }
     }
 }

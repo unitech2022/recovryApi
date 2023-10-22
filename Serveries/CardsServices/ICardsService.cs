@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DiscoveryZoneApi.Models;
 using DiscoveryZoneApi.Models.BaseEntity;
+using DiscoveryZoneApi.ViewModels;
 
 namespace DiscoveryZoneApi.Serveries.CardsServices
 {
@@ -13,7 +14,9 @@ namespace DiscoveryZoneApi.Serveries.CardsServices
         Task<BaseResponse> GetCards(string UserId,int page);
 
 
- Task<dynamic> GetAllCards();
+         Task<dynamic> GetAllCards();
+
+          Task<CardResponse> GetCardUser(string userId);
 
         Task<Card> AddCard(Card Card);
 

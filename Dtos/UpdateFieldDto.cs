@@ -8,10 +8,18 @@ namespace DiscoveryZoneApi.Dtos
     public class UpdateFieldDto
     {
 
-           public string? Name{ get; set; }
-           public string? ImageUrl { get; set; }
+        public string? NameAr { get; set; }
 
-            public int Status { get; set; }
-        
+        public string? NameEng { get; set; }
+        public string? ImageUrl { get; set; }
+
+
+
+
+
+        public int Order { get; set; }
+        public int Status { get; set; }
+
+
     }
 }

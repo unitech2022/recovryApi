@@ -13,15 +13,15 @@ namespace DiscoveryZoneApi.Models
      public string? NameEng { get; set; }
     public string? ImageUrl { get; set; }
 
-public int Order { get; set; }
-    public int Status { get; set; }
+    public int Order { get; set; }
+    public int Status { get; set; } //** =>  0  normaly   1 ===> not category  2 ===> card
     public DateTime CreatedAt { get; set; }
 
     public Field()
     {
 
       CreatedAt = DateTime.Now;
-      Status=0;
+      // Status=0;
 
     }
   }

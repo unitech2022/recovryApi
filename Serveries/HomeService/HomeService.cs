@@ -8,7 +8,7 @@ using DiscoveryZoneApi.Models;
 using Microsoft.EntityFrameworkCore;
 using DiscoveryZoneApi.ViewModels;
 using X.PagedList;
-using HattliApi.Models;
+
 
 namespace DiscoveryZoneApi.Serveries.HomeService
 {
@@ -87,19 +87,29 @@ namespace DiscoveryZoneApi.Serveries.HomeService
 
         public async Task<ResponseHomeUser> GetHomeUserData()
         {
-        
-           //** categories
+
+            //** categories
             List<Field> fields = await _context.Fields!.OrderBy(t => t.Order).ToListAsync();
             //** get user
-          
+
             List<Offer> offers = await _context.Offers!.OrderBy(t => t.Order).ToListAsync();
-        
+
+            Setting? setting = await _context.Settings!.FirstOrDefaultAsync(t => t.Name == "كود الدخول الي المتاجر"); ;
+
+            Setting? settingCallUs = await _context.Settings!.FirstOrDefaultAsync(t => t.Name == "رقم التواصل");
+
+            Setting? settingCardDetails = await _context.Settings!.FirstOrDefaultAsync(t => t.Name == "تفاصيل الكارد"); ;
+
 
             return new ResponseHomeUser
             {
                 Fields = fields,
                 Offers = offers,
-             
+                CodeMarkets = setting!.Value
+                ,
+                CallUsNumber = settingCallUs!.Value,
+                CardDetails = settingCardDetails!.Value
+
             };
 
 

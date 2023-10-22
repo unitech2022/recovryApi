@@ -18,9 +18,12 @@ namespace DiscoveryZoneApi.Serveries.SubscriptionsService
         Task<List<Subscription>> SearchSubscription(string textSearch);
 
         Task<dynamic> DetailsSubscription(int SubscriptionId);
+
+
+          Task<dynamic> AddSubscription(Subscription Subscription);
          Task<BaseResponse> GetSubscriptionsByCardId(int cardId,int page);
 
-        //  Task<BaseResponse> GetSubscriptionsByCategoryId(int categoryId,int page);
+    
 
         Task<Subscription> UpdateSubscription(Subscription Subscription);
 

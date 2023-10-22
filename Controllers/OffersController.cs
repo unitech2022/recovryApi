@@ -48,24 +48,24 @@ namespace DiscoveryZoneApi.Controllers
             return Ok(await _repository.GetItems(page));
         }
 
-    
+        [HttpPost]
+        [Route("update-status-Offer")]
+        public async Task<ActionResult> UpdateOfferStatus([FromForm] int status, [FromForm] int id)
+
+        {
+
+
+            return Ok(await _repository.UpdateOfferStatus(status, id));
+        }
 
         [HttpPut]
         [Route("update-Offer")]
-        public async Task<ActionResult> UpdateOffer([FromForm] UpdateOfferDto UpdateOffer, [FromForm] int id)
+        public async Task<ActionResult> UpdateOffer([FromForm] string DescAr, [FromForm] string image, [FromForm] int order, [FromForm] int id)
 
         {
-            Offer Offer = await _repository.GitById(id);
-            if (Offer == null)
-            {
-                return NotFound();
-            }
-            _mapper.Map(UpdateOffer, Offer);
 
-            _repository.UpdateObject(Offer);
-            _repository.SaveChanges();
 
-            return Ok(Offer);
+            return Ok(await _repository.UpdateOffer(image, DescAr, order, id));
         }
 
         [HttpPost]

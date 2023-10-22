@@ -6,7 +6,7 @@ using DiscoveryZoneApi.ViewModels;
 using DiscoveryZoneApi.Core;
 using DiscoveryZoneApi.Models;
 
-using HattliApi.Models;
+
 
 namespace DiscoveryZoneApi.Serveries.HomeService
 {

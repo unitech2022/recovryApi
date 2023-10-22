@@ -24,12 +24,8 @@ namespace DiscoveryZoneApi.Models
         public string? AboutAr { get; set; }
 
          public string? AboutEng { get; set; }
-
+         public string? LogoImage { get; set; }
         public string? Images { get; set; }
-
-
-
-
 
         public int Order { get; set; }
 

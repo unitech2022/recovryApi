@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using DiscoveryZoneApi.Models.BaseEntity;
 
 using X.PagedList;
+using DiscoveryZoneApi.ViewModels;
 
 namespace DiscoveryZoneApi.Serveries.CardsServices
 {
@@ -113,6 +114,32 @@ namespace DiscoveryZoneApi.Serveries.CardsServices
         {
             List<Card> Cards = await _context.Cards!.ToListAsync();
             return Cards;
+        }
+
+        public async Task<CardResponse> GetCardUser(string userId)
+        {
+             UserDetailResponse userDetailResponse =new();
+            bool IsSubscription =false;
+            Card? card = _context.Cards!.ToList().First();
+            Subscription? subscription = await _context.Subscriptions!.
+            FirstOrDefaultAsync(t => t.UserId == userId && t.Status == 0 && t.CardId == card.Id);
+            if(userId!=null || userId != ""){
+                User? user=await _context.Users.FirstOrDefaultAsync(t=> t.Id==userId);
+
+                 userDetailResponse =_mapper.Map<UserDetailResponse>(user);
+            }
+            if(subscription==null){
+                IsSubscription=false;
+            }else{
+                  IsSubscription=true;
+            }
+            return new CardResponse{ 
+                Card =card,
+                subscription =subscription,
+                isSSubscribe=IsSubscription,
+                UserDetailResponse=userDetailResponse
+            };
+
         }
     }
 }

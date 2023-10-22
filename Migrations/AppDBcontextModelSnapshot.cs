@@ -34,19 +34,10 @@ namespace DiscoveryZoneApi.Migrations
                     b.Property<string>("DescriptionEng")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("PageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TitleAr")
                         .HasColumnType("longtext");
 
                     b.Property<string>("TitleEng")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("UserId")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("Viewed")
@@ -81,7 +72,13 @@ namespace DiscoveryZoneApi.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
+
                     b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeDate")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -186,6 +183,9 @@ namespace DiscoveryZoneApi.Migrations
                     b.Property<string>("Link")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("LogoImage")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("NameAr")
                         .HasColumnType("longtext");
 
@@ -241,6 +241,23 @@ namespace DiscoveryZoneApi.Migrations
                     b.ToTable("Offers");
                 });
 
+            modelBuilder.Entity("DiscoveryZoneApi.Models.Setting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Settings");
+                });
+
             modelBuilder.Entity("DiscoveryZoneApi.Models.Subscription", b =>
                 {
                     b.Property<int>("Id")
@@ -253,7 +270,13 @@ namespace DiscoveryZoneApi.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("ExpiredDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("FirstName")
@@ -267,6 +290,9 @@ namespace DiscoveryZoneApi.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -310,12 +336,6 @@ namespace DiscoveryZoneApi.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("longtext");
 
-                    b.Property<double?>("Lat")
-                        .HasColumnType("double");
-
-                    b.Property<double?>("Lng")
-                        .HasColumnType("double");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -344,9 +364,6 @@ namespace DiscoveryZoneApi.Migrations
 
                     b.Property<string>("ProfileImage")
                         .HasColumnType("longtext");
-
-                    b.Property<double?>("Rate")
-                        .HasColumnType("double");
 
                     b.Property<string>("Role")
                         .HasColumnType("longtext");
